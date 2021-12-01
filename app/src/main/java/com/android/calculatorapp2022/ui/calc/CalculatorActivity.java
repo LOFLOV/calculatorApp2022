@@ -1,14 +1,24 @@
-package com.android.calculatorapp2022.ui;
+package com.android.calculatorapp2022.ui.calc;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.calculatorapp2022.R;
 import com.android.calculatorapp2022.domain.CalculatorImpl;
 import com.android.calculatorapp2022.domain.Operation;
+import com.android.calculatorapp2022.storage.ThemeStorage;
+import com.android.calculatorapp2022.ui.theme.SelectThemeActivity;
+import com.android.calculatorapp2022.ui.theme.Theme;
 
 import java.util.HashMap;
 
@@ -18,8 +28,32 @@ public class CalculatorActivity extends AppCompatActivity implements CalculatorV
 
     private CalculatorPresenter presenter;
 
+    private ThemeStorage storage;
+
+    // ActivityResultLauncher позволит запустить активити и вернуть результат
+    // вызвать launch и метод intent
+
+    private final ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+            if (result.getResultCode() == Activity.RESULT_OK) {
+                Theme theme = (Theme) result.getData().getSerializableExtra(SelectThemeActivity.EXTRA_THEME);
+
+                storage.saveTheme(theme);
+
+                recreate();
+            }
+        }
+    });
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        getSupportActionBar().hide();
+
+        storage = new ThemeStorage(this);
+        setTheme(storage.getSavedTheme().getTheme());
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -69,11 +103,6 @@ public class CalculatorActivity extends AppCompatActivity implements CalculatorV
         operands.put(R.id.btn_minus, Operation.SUB);
         operands.put(R.id.btn_divide, Operation.DIV);
         operands.put(R.id.btn_multiply, Operation.MULT);
-/*
-        operands.put(R.id.btn_plus_minus, Operation.PLUSMINUS);
-        operands.put(R.id.btn_percent, Operation.PERCENT);
-
- */
 
         View.OnClickListener operandClickListener = new View.OnClickListener() {
             @Override
@@ -87,7 +116,16 @@ public class CalculatorActivity extends AppCompatActivity implements CalculatorV
         findViewById(R.id.btn_divide).setOnClickListener(operandClickListener);
         findViewById(R.id.btn_multiply).setOnClickListener(operandClickListener);
 
+        findViewById(R.id.btn_choose_theme).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CalculatorActivity.this, SelectThemeActivity.class);
+                intent.putExtra(SelectThemeActivity.EXTRA_THEME, storage.getSavedTheme());
+//                startActivity(intent);
 
+                launcher.launch(intent);
+            }
+        });
     }
 
     @Override

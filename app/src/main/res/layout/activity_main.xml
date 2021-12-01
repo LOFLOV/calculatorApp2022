@@ -8,7 +8,7 @@
     android:background="@color/white"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".ui.CalculatorActivity">
+    tools:context=".ui.calc.CalculatorActivity">
 
     <TextView
         android:id="@+id/result"
@@ -230,6 +230,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toEndOf="@id/btn_dot" />
+
+    <ImageView
+        android:id="@+id/btn_choose_theme"
+        style="@style/MyButton"
+        android:src="@drawable/ic_baseline_settings_24"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:text="@string/choose_theme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

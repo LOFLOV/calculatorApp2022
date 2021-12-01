@@ -1,4 +1,4 @@
-package com.android.calculatorapp2022.ui;
+package com.android.calculatorapp2022.ui.calc;
 
 import com.android.calculatorapp2022.domain.Calculator;
 import com.android.calculatorapp2022.domain.Operation;
@@ -46,5 +46,9 @@ public class CalculatorPresenter {
             argTwo = 0.0;
             previousOperation = operation;
         }
+    }
+
+    public int sum(int a, int b) {
+        return a+b;
     }
 }

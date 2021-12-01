@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">calculatorApp2022</string>
+    <string name="app_name">Calculator</string>
     <string name="btn_ac">AC</string>
     <string name="btn_plus_minus">+/-</string>
     <string name="btn_percent">%</string>
@@ -19,4 +19,9 @@
     <string name="btn_0">0</string>
     <string name="btn_dot">.</string>
     <string name="btn_equals">=</string>
+    <string name="theme_one">Purple theme</string>
+    <string name="theme_four">Green theme</string>
+    <string name="theme_three">Blue theme</string>
+    <string name="theme_two">Red theme</string>
+    <string name="choose_theme">-</string>
 </resources>
