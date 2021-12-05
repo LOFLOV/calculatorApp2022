@@ -7,4 +7,6 @@ public enum Operation {
     DIV,
     PERCENT,
     PLUSMINUS,
+    EQUAL,
+    CLEAR
 }

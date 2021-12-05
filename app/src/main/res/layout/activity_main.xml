@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:gravity="end"
         android:textSize="@dimen/main_text_field_size"
+        android:maxLength="8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +31,7 @@
         android:text="@string/btn_ac"
         app:layout_constraintBottom_toTopOf="@+id/btn_7"
         app:layout_constraintEnd_toStartOf="@id/btn_plus_minus"
-        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintHorizontal_weight="2"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.button.MaterialButton
@@ -39,6 +40,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/btn_plus_minus"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/btn_8"
         app:layout_constraintEnd_toStartOf="@id/btn_percent"
         app:layout_constraintHorizontal_weight="1"

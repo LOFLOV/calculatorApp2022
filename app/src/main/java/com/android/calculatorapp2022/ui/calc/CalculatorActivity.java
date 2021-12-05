@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.calculatorapp2022.R;
 import com.android.calculatorapp2022.domain.CalculatorImpl;
@@ -19,12 +18,18 @@ import com.android.calculatorapp2022.domain.Operation;
 import com.android.calculatorapp2022.storage.ThemeStorage;
 import com.android.calculatorapp2022.ui.theme.SelectThemeActivity;
 import com.android.calculatorapp2022.ui.theme.Theme;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.HashMap;
 
 public class CalculatorActivity extends AppCompatActivity implements CalculatorView {
 
     private TextView txtResult;
+    private MaterialButton btnPlus;
+    private MaterialButton btnMinus;
+    private MaterialButton btnMult;
+    private MaterialButton btnDiv;
+    private MaterialButton btnEqual;
 
     private CalculatorPresenter presenter;
 
@@ -60,25 +65,37 @@ public class CalculatorActivity extends AppCompatActivity implements CalculatorV
         presenter = new CalculatorPresenter(this, new CalculatorImpl());
 
         txtResult = findViewById(R.id.result);
+        btnPlus = findViewById(R.id.btn_plus);
+        btnMinus = findViewById(R.id.btn_minus);
+        btnMult = findViewById(R.id.btn_multiply);
+        btnDiv = findViewById(R.id.btn_divide);
+        btnEqual = findViewById(R.id.btn_equals);
 
         findViewById(R.id.btn_dot).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.onDotPrsesed();
+                presenter.onDotPressed();
             }
         });
 
-        HashMap<Integer, Integer> digits = new HashMap<>();
-        digits.put(R.id.btn_0, 0);
-        digits.put(R.id.btn_1, 1);
-        digits.put(R.id.btn_2, 2);
-        digits.put(R.id.btn_3, 3);
-        digits.put(R.id.btn_4, 4);
-        digits.put(R.id.btn_5, 5);
-        digits.put(R.id.btn_6, 6);
-        digits.put(R.id.btn_7, 7);
-        digits.put(R.id.btn_8, 8);
-        digits.put(R.id.btn_9, 9);
+        findViewById(R.id.btn_ac).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.onAcPressed();
+            }
+        });
+
+        HashMap<Integer, Double> digits = new HashMap<>();
+        digits.put(R.id.btn_0, 0.0);
+        digits.put(R.id.btn_1, 1.0);
+        digits.put(R.id.btn_2, 2.0);
+        digits.put(R.id.btn_3, 3.0);
+        digits.put(R.id.btn_4, 4.0);
+        digits.put(R.id.btn_5, 5.0);
+        digits.put(R.id.btn_6, 6.0);
+        digits.put(R.id.btn_7, 7.0);
+        digits.put(R.id.btn_8, 8.0);
+        digits.put(R.id.btn_9, 9.0);
 
         View.OnClickListener digitClickListener = new View.OnClickListener() {
             @Override
@@ -103,6 +120,8 @@ public class CalculatorActivity extends AppCompatActivity implements CalculatorV
         operands.put(R.id.btn_minus, Operation.SUB);
         operands.put(R.id.btn_divide, Operation.DIV);
         operands.put(R.id.btn_multiply, Operation.MULT);
+        operands.put(R.id.btn_equals, Operation.EQUAL);
+        operands.put(R.id.btn_percent, Operation.PERCENT);
 
         View.OnClickListener operandClickListener = new View.OnClickListener() {
             @Override
@@ -115,6 +134,8 @@ public class CalculatorActivity extends AppCompatActivity implements CalculatorV
         findViewById(R.id.btn_minus).setOnClickListener(operandClickListener);
         findViewById(R.id.btn_divide).setOnClickListener(operandClickListener);
         findViewById(R.id.btn_multiply).setOnClickListener(operandClickListener);
+        findViewById(R.id.btn_equals).setOnClickListener(operandClickListener);
+        findViewById(R.id.btn_percent).setOnClickListener(operandClickListener);
 
         findViewById(R.id.btn_choose_theme).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,4 +153,16 @@ public class CalculatorActivity extends AppCompatActivity implements CalculatorV
     public void showResult(String value) {
         txtResult.setText(value);
     }
+
+    @Override
+    public void clearResultTextView() {
+        txtResult.setText("");
+    }
+
+    @Override
+    public void displayInResultOperation(String operation) {
+        String existingText = txtResult.getText().toString();
+        txtResult.setText(existingText + operation);
+    }
+
 }
