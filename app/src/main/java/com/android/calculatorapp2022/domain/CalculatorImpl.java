@@ -12,6 +12,8 @@ public class CalculatorImpl implements Calculator {
                 return argOne / argTwo;
             case MULT:
                 return argOne * argTwo;
+            case PERCENT:
+                return argOne / 100;
         }
         return 0;
     }
